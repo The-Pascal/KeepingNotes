@@ -26,12 +26,7 @@ class MainActivity : AppCompatActivity() {
         RecyclerView!!.layoutManager = layoutManager
         RecyclerView!!.itemAnimator = DefaultItemAnimator()
 
-        // Add a neat dividing line between items in the list
-        //recyclerView!!.addItemDecoration(
-        //DividerItemDecoration(this,
-        //LinearLayoutManager.VERTICAL))
 
-        // set the adapter
         RecyclerView!!.adapter = adapter
 
 

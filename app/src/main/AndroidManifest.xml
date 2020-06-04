@@ -10,13 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DialogNewNote"></activity>
-        <activity android:name="NoteAdapter"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".registerLogin.RegistrationPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".registerLogin.loginpage"></activity>
+
+        <activity android:name="NoteAdapter"></activity>
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 

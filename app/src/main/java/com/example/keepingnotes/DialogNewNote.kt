@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.RadioButton
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.activity_dialog_new_note.*
 
@@ -27,13 +28,13 @@ class DialogNewNote : DialogFragment() {
             dialogView.findViewById(R.id.editDescription) as EditText
 
         val checkBoxIdea =
-            dialogView.findViewById(R.id.checkBoxIdea) as CheckBox
+            dialogView.findViewById(R.id.checkBoxIdea) as RadioButton
 
         val checkBoxTodo =
-            dialogView.findViewById(R.id.checkBoxTodo) as CheckBox
+            dialogView.findViewById(R.id.checkBoxTodo) as RadioButton
 
         val checkBoxImportant =
-            dialogView.findViewById(R.id.checkBoxImportant) as CheckBox
+            dialogView.findViewById(R.id.checkBoxImportant) as RadioButton
 
         val btnCancel =
             dialogView.findViewById(R.id.btnCancel) as Button
@@ -58,6 +59,8 @@ class DialogNewNote : DialogFragment() {
             newNote.idea = checkBoxIdea.isChecked
             newNote.todo = checkBoxTodo.isChecked
             newNote.important = checkBoxImportant.isChecked
+
+
 
             val callingActivity = activity as MainActivity?
 
