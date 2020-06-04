@@ -9,6 +9,9 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioButton
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_dialog_new_note.*
 
 class DialogNewNote : DialogFragment() {
@@ -60,13 +63,21 @@ class DialogNewNote : DialogFragment() {
             newNote.todo = checkBoxTodo.isChecked
             newNote.important = checkBoxImportant.isChecked
 
+            val db = Firebase.firestore
+            val uid = FirebaseAuth.getInstance().uid
 
+            db.collection("Users").document("$uid/notes/${newNote.title}")
+                .set(newNote)
+                .addOnCompleteListener {
+                    dismiss()
+                }
 
             val callingActivity = activity as MainActivity?
 
             callingActivity!!.createNewNote(newNote)
 
-            dismiss()
+
+
         }
 
         return builder.create()

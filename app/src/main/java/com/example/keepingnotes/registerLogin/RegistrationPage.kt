@@ -16,6 +16,8 @@ import com.example.keepingnotes.MainActivity
 import com.example.keepingnotes.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -70,7 +72,7 @@ class RegistrationPage : AppCompatActivity() {
                 }
                 else{
                     Toast.makeText(this,"Account successfully created with uid : ${it.result?.user?.uid} ",Toast.LENGTH_SHORT).show()
-                    saveUserToFirebaseDatabase()
+                    saveUserToFirebaseDatabase(email)
                 }
             }
             .addOnFailureListener{
@@ -80,14 +82,17 @@ class RegistrationPage : AppCompatActivity() {
     }
 
 
-    private fun saveUserToFirebaseDatabase(){
+    private fun saveUserToFirebaseDatabase(email:String){
+        val email = email
         val uid = FirebaseAuth.getInstance().uid?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/Users/$uid")
+        val db = Firebase.firestore
         val users = Users(
+            email,
             uid,
             username_editText_register.text.toString()
         )
-        ref.setValue(users)
+        db.collection("Users").document(uid)
+            .set(users)
             .addOnSuccessListener {
 
                 val intent = Intent(this, MainActivity::class.java)
@@ -111,6 +116,6 @@ class RegistrationPage : AppCompatActivity() {
 }
 
 @Parcelize
-class Users(val uid: String , val username: String ): Parcelable{
-    constructor(): this("","")
+class Users(val email: String, val uid: String , val username: String ): Parcelable{
+    constructor(): this("","","")
 }

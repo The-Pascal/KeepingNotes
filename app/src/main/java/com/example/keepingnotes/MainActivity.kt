@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.show_all_notes.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +37,8 @@ class MainActivity : AppCompatActivity() {
             val dialog = DialogNewNote()
             dialog.show(supportFragmentManager,"")
         }
+
+
     }
 
     fun createNewNote(n: Note){
