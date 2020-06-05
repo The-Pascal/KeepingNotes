@@ -1,5 +1,6 @@
 package com.example.keepingnotes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.keepingnotes.registerLogin.RegistrationPage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -38,6 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         RecyclerView!!.layoutManager = layoutManager
 
+        profile_show_all_notes.setOnClickListener {
+            val intent = Intent(this,Profile::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
@@ -45,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     fun getAllNotes(){
 
 
-        noteList.clear()
 
         val uid = FirebaseAuth.getInstance().uid
 
@@ -53,7 +59,12 @@ class MainActivity : AppCompatActivity() {
 
         db.collection("/Users/${uid}/notes")
             .addSnapshotListener { snapshot, exception ->
+
+                noteList.removeAll(noteList)
+
                 snapshot?.forEach { documentSnapshot ->
+
+
 
                     var addNote = Note()
                     val document = documentSnapshot.data
@@ -79,6 +90,8 @@ class MainActivity : AppCompatActivity() {
 
 
     fun showNote(noteToShow: Int) {
-        Toast.makeText(this,"Showing note : ${noteToShow}",Toast.LENGTH_SHORT).show()
+        val dialog = DialogShowNote()
+        dialog.sendNoteSelected(noteList!![noteToShow])
+        dialog.show(supportFragmentManager, "")
     }
 }

@@ -2,17 +2,19 @@ package com.example.keepingnotes
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.RadioButton
+import android.view.View
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_dialog_new_note.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class DialogNewNote : DialogFragment() {
 
@@ -43,7 +45,9 @@ class DialogNewNote : DialogFragment() {
             dialogView.findViewById(R.id.btnCancel) as Button
 
         val btnOK =
-            dialogView.findViewById(R.id.btnOK) as Button
+            dialogView.findViewById<Button>(R.id.btnOK)
+
+        val progressBar = dialogView.findViewById<ProgressBar>(R.id.progressBar)
 
 
         builder.setView(dialogView).setMessage("Add a new note")
@@ -53,6 +57,9 @@ class DialogNewNote : DialogFragment() {
         }
 
         btnOK.setOnClickListener {
+
+            progressBar.visibility = View.VISIBLE
+
             val newNote = Note()
 
             newNote.title = editTitle.text.toString()

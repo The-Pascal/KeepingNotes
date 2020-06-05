@@ -2,6 +2,9 @@ package com.example.keepingnotes.registerLogin
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +39,7 @@ class RegistrationPage : AppCompatActivity() {
 
         //registration button click
         registerbtn.setOnClickListener{
-
+            register_button_register.startAnimation()
             register()
         }
 
@@ -68,15 +71,22 @@ class RegistrationPage : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if(!it.isSuccessful){
+                    register_button_register.revertAnimation{
+                        register_button_register.setBackgroundResource(R.drawable.rounded_button)
+                    }
                     return@addOnCompleteListener
+
                 }
                 else{
-                    Toast.makeText(this,"Account successfully created with uid : ${it.result?.user?.uid} ",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Account successfully created.",Toast.LENGTH_SHORT).show()
                     saveUserToFirebaseDatabase(email)
                 }
             }
             .addOnFailureListener{
                 Toast.makeText(this, "Error creating account",Toast.LENGTH_SHORT).show()
+                register_button_register.revertAnimation{
+                    register_button_register.setBackgroundResource(R.drawable.rounded_button)
+                }
             }
 
     }
@@ -94,6 +104,11 @@ class RegistrationPage : AppCompatActivity() {
         db.collection("Users").document(uid)
             .set(users)
             .addOnSuccessListener {
+
+                val icon: Bitmap
+                val deepColor = Color.parseColor("#808000")
+                icon = BitmapFactory.decodeResource(resources,R.drawable.tick_icon)
+                register_button_register.doneLoadingAnimation(deepColor,icon)
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or ( Intent.FLAG_ACTIVITY_NEW_TASK)
