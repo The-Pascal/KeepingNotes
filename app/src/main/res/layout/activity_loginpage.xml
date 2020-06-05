@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="@+id/email_editText_login"
         app:layout_constraintTop_toBottomOf="@+id/email_editText_login" />
 
-    <Button
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/login_button_login"
         android:layout_width="0dp"
         android:layout_height="50dp"
