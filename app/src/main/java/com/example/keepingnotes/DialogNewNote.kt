@@ -58,6 +58,11 @@ class DialogNewNote : DialogFragment() {
 
         btnOK.setOnClickListener {
 
+            if(editTitle.text.toString().length == 0)
+            {
+                return@setOnClickListener
+            }
+
             progressBar.visibility = View.VISIBLE
 
             val newNote = Note()
